@@ -6,7 +6,7 @@ Make sure you have Node.js and npm installed. Then run `npm install`. This will 
 
 ## Running the server
 
-Run `node index` to start the server. It will listen on port 3000.
+Run `node index` to start the server. It will listen on port 5000.
 
 ## API
 

@@ -1,13 +1,13 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 5000;
 
 const cors = require('cors');
 
 const api = require('./routes/api');
 
 const corsOptions = {
-    origin: ['http://localhost:5000'],
+    origin: ['http://localhost:3000'],
     credentials: true,
 };
 
