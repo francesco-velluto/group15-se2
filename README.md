@@ -24,6 +24,7 @@ The system should also provide an estimate of the waiting (minimum) time for the
 $$
 T_r = t_r \cdot (\frac{n_r}{\sum_{i=1}{\frac{1}{k_i} \cdot s_{i,r}}} + \frac{1}{2})
 $$
+
 where:
 - tr is the service time for request type r
 - nr is the number of people in queue for request type r
