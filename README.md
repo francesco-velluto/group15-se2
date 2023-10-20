@@ -1,6 +1,36 @@
 # Office Queue Management System
 
-## The Office Queue Management is a system that manages the queues for desk services open the public (e.g., post office, medical office). In the same office, various counters can handle different types of services (e.g., shipping or accounts management).
+## Launch the system
+
+To launch the system, you need to have installed Node.js and npm. If you don't have them, you can download them from [here](https://nodejs.org/en/download/).
+
+If you have them, you can proceed with the following steps.
+
+To launch the backend server, run the following commands on terminal on the root folder:
+
+```bash
+cd backend
+npm install
+node index
+```
+
+Go back to the root folder with this command:
+
+```bash
+cd ..
+```
+
+To launch the frontend client, open another terminal and run the following commands on terminal on the root folder:
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+## Description
+
+The Office Queue Management is a system that manages the queues for desk services open the public (e.g., post office, medical office). In the same office, various counters can handle different types of services (e.g., shipping or accounts management).
 
 The office consists of a set of counters that are usually identified by numbers (e.g. Counter 1, 2 etc.). Each counter can handle several types of services, which are defined at configuration time. The definition consist of a tag name that identifies the service type and an estimate of the average time needed to process that service type (known as service time). A service type can be served by multiple counters.
 
