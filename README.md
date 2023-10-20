@@ -21,12 +21,9 @@ Each time a new ticket is selected the following actions must be performed:
 - show on the main display board the updated length of the queue associated with the type of served ticket
 The system should also provide an estimate of the waiting (minimum) time for the holder of a given ticket number. The waiting time is evaluated as:
 
-<center><img src="https://github.com/francesco-velluto/group15-se2/assets/53307355/4ed490fb-a0f6-4044-b7b6-9063ec1a87bc" width="30%" style="border-radius: 3%"/></center>
-
 $$
 T_r = t_r \cdot (\frac{n_r}{\sum_{i=1}{\frac{1}{k_i} \cdot s_{i,r}}} + \frac{1}{2})
 $$
-
 where:
 - tr is the service time for request type r
 - nr is the number of people in queue for request type r
@@ -38,7 +35,9 @@ John enters the post office to deposit money. There are two counters that can of
 the other as an alternative to sending packages. There are 4 people waiting for the same service.
 If we assume the service time is 5 min, the expected waiting time would be
 
-<center><img src="https://github.com/francesco-velluto/group15-se2/assets/53307355/0ff5fcd8-a536-470d-8e49-b7f162ea230c" width="40%" style="border-radius: 3%"/></center>
+$$
+T_r = 5 \cdot (\frac{4}{1+1/2} + \frac{1}{2}) = 5 \cdot (\frac{8}{3} + \frac{1}{2}) = 15 : 50
+$$
 
 A manager in the office must be able to know how many customers have been served for each service type. In addition the
 system should provide the number of customers each counter has served, further divided by service type. Stats must be
