@@ -1,3 +1,8 @@
+"use strict";
+
+const db = require("../dao/db");
+const serviceDao = require("../dao/serviceDao");
+
 module.exports = {
 
     /**
@@ -8,7 +13,13 @@ module.exports = {
      * @returns: { services: [ { id: number, name: string } ] }
      * @error: 500 - internal server error if something went wrong
      */
-    getAvailableServices: (req, res) => {
+    getAvailableServices: async (req, res) => {
         // TODO: implement get all available services
+
+        // TODO: use the relative Service model
+
+        // testing db connection done by Magliari Elio
+        const services = await serviceDao.getAllServices();
+        console.log(services);
     }
 }

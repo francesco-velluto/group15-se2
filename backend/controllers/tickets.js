@@ -1,3 +1,7 @@
+'use strict';
+
+const ticketDao = require("../dao/ticketDao");
+
 module.exports = {
     /**
      * Get ticket details by ticket number
@@ -8,10 +12,17 @@ module.exports = {
      * @error: 404 - if ticketNumber doesn't exist
      * @error: 500 - internal server error if something went wrong
      */
-    getTicketDetails: (req, res) => {
-        let ticketNumber = req.params.ticketNumber;
+    getTicketDetails: async (req, res) => {
+        //let ticketNumber = req.params.ticketNumber;
 
         // TODO: implement get ticket details
+
+        // TODO: use the relative Ticket model
+        
+        // testing db connection done by Magliari Elio
+        const tickets = await ticketDao.getAllTickets();
+        console.log(tickets);
+
     },
 
     /**
@@ -24,11 +35,14 @@ module.exports = {
      * @error: 404 - not found if serviceId is not valid
      * @error: 500 - internal server error if something went wrong
      */
-    newTicket: (req, res) => {
+    newTicket: async (req, res) => {
         let serviceId = req.body.serviceId;
         if(!serviceId)
             return res.status(400).send('serviceId is required')
 
         // TODO: implement new ticket
+
+        // TODO: use the relative Ticket model
+
     }
 }
