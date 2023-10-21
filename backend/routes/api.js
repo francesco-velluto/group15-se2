@@ -32,7 +32,8 @@ router.post('/tickets', newTicket);
  * GET /api/tickets/:ticketNumber
  * @params: ticketNumber
  * @body: none
- * @returns: { ticketNumber: string, service: string, status: string, estimatedTime: date }
+ * @returns: { ticketNumber: string, service: string, status: string, estimatedTime: number }
+ * @error: 400 - bad request if ticketNumber is not present
  * @error: 404 - if ticketNumber doesn't exist
  * @error: 500 - internal server error if something went wrong
  */

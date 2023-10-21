@@ -33,6 +33,7 @@ Requests a new ticket for service and return the ticket number assigned.
 - **Body**:
   - **_Body_**: `{ serviceId: number }` where `serviceId` is the unique identifier of the service
 - **Response**:
+- - _HTTP 400 Bad Request_: if `serviceId` is not specified
   - _HTTP 404 Not Found_: if the service with the specified `serviceId` does not exist
   - _HTTP 500 Internal Server Error_: if an error occurs
   - _HTTP 200 OK_: if the request is successful
@@ -49,4 +50,4 @@ Returns the details of the ticket with the specified number.
   - _HTTP 404 Not Found_: if the ticket with the specified `ticketNumber` does not exist
   - _HTTP 500 Internal Server Error_: if an error occurs
   - _HTTP 200 OK_: if the request is successful
-    - **_Body_**: `{ ticketNumber: number, service: string, status: string, creationTime: string, estimatedTime: string }` where `ticketNumber` is the number of the ticket, `service` is the name of the related service, `status` is the status of the ticket, `creationTime` is the time when the ticket was created and `estimatedTime` is the estimated time of the ticket
+    - **_Body_**: `{ ticketNumber: number, service: string, status: string, creationTime: string, estimatedTime: number }` where `ticketNumber` is the number of the ticket, `service` is the name of the related service, `status` is the status of the ticket, `creationTime` is the time when the ticket was created and `estimatedTime` is the estimated time of the ticket
