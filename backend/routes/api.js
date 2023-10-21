@@ -37,3 +37,5 @@ router.post('/tickets', newTicket);
  * @error: 500 - internal server error if something went wrong
  */
 router.get('/tickets/:ticketNumber', getTicketDetails);
+
+module.exports = router;
