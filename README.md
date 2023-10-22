@@ -73,3 +73,7 @@ $$
 A manager in the office must be able to know how many customers have been served for each service type. In addition the
 system should provide the number of customers each counter has served, further divided by service type. Stats must be
 provided per day, week, month.
+
+## Mockup
+Access to the system's frontend mockup is available via the following link:
+https://www.figma.com/file/yn6Nnayc6SZLwSlyjoCqVo/Office-Queue-Management-System?type=design&node-id=0%3A1&mode=design&t=LjZTf5SlCS8Dz3ZK-1
