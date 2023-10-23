@@ -4,6 +4,8 @@ import {Route, Routes} from "react-router-dom";
 import RequestServicePage from "./pages/RequestServicePage";
 import TicketDetailsPage from "./pages/TicketDetailsPage";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+
 function App() {
     return (
         <Routes>

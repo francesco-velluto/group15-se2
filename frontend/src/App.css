@@ -36,3 +36,32 @@
     transform: rotate(360deg);
   }
 }
+
+.title-navbar {
+  background-color: #FFFF99;
+}
+
+#service-card {
+  background-color: #E1E1A0;
+  border: 2px solid grey;
+  box-shadow: inset 0px 3px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+}
+
+#service-card:hover {
+  cursor: pointer;
+  background-color: bisque;
+}
+
+.card-container {
+  background-color: #87CEEB;
+  border-radius: 20px;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.main-content {
+  /* background-color: bisque; */
+}
