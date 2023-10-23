@@ -18,7 +18,9 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+-- remove the comment this line if the database exists
 DROP DATABASE "Office-Queue-Management-System";
+
 --
 -- TOC entry 3379 (class 1262 OID 16390)
 -- Name: Office-Queue-Management-System; Type: DATABASE; Schema: -; Owner: postgres
