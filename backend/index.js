@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 5000;
+const port = 8080;
 
 const cors = require('cors');
 const db = require("./dao/db");
@@ -23,7 +23,7 @@ app.use('/api', api);
 
 
 // testing db connection done by Magliari Elio
-getAvailableServices();
+// getAvailableServices();
 getTicketDetails();
 
 

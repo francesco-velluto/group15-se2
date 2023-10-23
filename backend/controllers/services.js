@@ -18,8 +18,11 @@ module.exports = {
 
         // TODO: use the relative Service model
 
-        // testing db connection done by Magliari Elio
-        const services = await serviceDao.getAllServices();
-        console.log(services);
+        try {
+            const services = await serviceDao.getAllServices();
+            res.json({ services });
+        } catch (err) {
+            res.status(500).json({ error: err });
+        }        
     }
 }
