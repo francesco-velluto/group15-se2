@@ -57,11 +57,11 @@ function ServiceCard(props) {
     const navigate = useNavigate();
 
     const newTicket = async () => {
-        
+        //debugger;
         try {
             // post a new ticket request and redirect to the ticket details page
             const ticketNumber = await createNewTicket(props.serviceId);
-            console.log(ticketNumber);
+            
             navigate(`/tickets/${ticketNumber}`);
         } catch (err) {
             props.setErrMsg(err.message);

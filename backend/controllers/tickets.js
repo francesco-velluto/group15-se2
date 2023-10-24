@@ -13,15 +13,17 @@ module.exports = {
      * @error: 500 - internal server error if something went wrong
      */
     getTicketDetails: async (req, res) => {
-        //let ticketNumber = req.params.ticketNumber;
+        let ticketNumber = req.params.ticketNumber;
+
+        console.log(ticketNumber);
 
         // TODO: implement get ticket details
 
         // TODO: use the relative Ticket model
 
         // testing db connection done by Magliari Elio
-        const tickets = await ticketDao.getAllTickets();
-        console.log(tickets);
+        //const tickets = await ticketDao.getAllTickets();
+        //console.log(tickets);
 
     },
 
@@ -38,7 +40,7 @@ module.exports = {
     newTicket: async (req, res) => {
         debugger;
         let serviceId = req.body.serviceId;
-        if (!serviceId)
+        if (serviceId == null)
             return res.status(400).send('serviceId is required')
 
         if (serviceId<0 || serviceId>7)

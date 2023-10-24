@@ -34,7 +34,7 @@ export const createNewTicket = async (serviceId) => {
         });
         if (response.ok) {
             const ticket = await response.json();
-            console.log(ticket);
+            
             return ticket;
         } else {
             const errMessage = await response.text();

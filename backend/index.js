@@ -24,7 +24,7 @@ app.use('/api', api);
 
 // testing db connection done by Magliari Elio
 // getAvailableServices();
-getTicketDetails();
+//getTicketDetails();
 
 
 

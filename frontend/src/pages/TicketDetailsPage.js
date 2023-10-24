@@ -20,7 +20,7 @@ function TicketDetailsPage() {
             }).then((data) => {
 
                 // handle data
-                console.log(data);
+                //console.log(data);
             }).catch((error) => {
                 // handle error
                 console.log(error);
