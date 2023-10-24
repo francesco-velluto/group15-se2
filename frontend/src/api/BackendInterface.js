@@ -1,3 +1,5 @@
+import { json } from "react-router-dom";
+
 const APIUrl = 'http://localhost:8080/api';
 
 export const getTicketDetails = (ticketId) => {
@@ -21,16 +23,18 @@ export const getAllAvailableServices = async () => {
 }
 
 export const createNewTicket = async (serviceId) => {
+    
     try {
         const response = await fetch(`${APIUrl}/tickets`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(serviceId),
+            body: JSON.stringify({serviceId: serviceId}),
         });
         if (response.ok) {
             const ticket = await response.json();
+            console.log(ticket);
             return ticket;
         } else {
             const errMessage = await response.text();

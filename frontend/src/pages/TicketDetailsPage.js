@@ -4,11 +4,11 @@ import * as BackendInterface from "../api/BackendInterface";
 
 function TicketDetailsPage() {
     const { ticketNumber } = useParams();
-
+    //const [ticket, setTicket] = useState({});
     // TODO - implement ticket details page
 
-    /**
-        EXAMPLE OF API CALL USAGE:
+    
+       // EXAMPLE OF API CALL USAGE:
 
         BackendInterface.getTicketDetails(ticketNumber)
             .then((response) => {
@@ -25,7 +25,7 @@ function TicketDetailsPage() {
                 // handle error
                 console.log(error);
             });
-     */
+     
 
     return (
         <div>
