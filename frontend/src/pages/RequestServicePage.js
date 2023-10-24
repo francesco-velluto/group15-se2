@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import { getAllAvailableServices } from "../api/BackendInterface";
-import { Card, Container, Row } from "react-bootstrap";
+import { createNewTicket, getAllAvailableServices } from "../api/BackendInterface";
+import { Alert, Card, Container, Row, Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function RequestServicePage() {
     const [services, setServices] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [errMsg, setErrMsg] = useState("");
 
     const fetchServicesList = async () => {
         try {
@@ -11,7 +14,9 @@ function RequestServicePage() {
             setServices(servicesList);
         } catch (err) {
             setServices([]);
-            console.log("error: " + err);
+            setErrMsg(err.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -21,16 +26,27 @@ function RequestServicePage() {
 
     return (
         <div>
-            <main className="main-content">
+            <main>
                 <Row className="title-navbar text-center py-3">
                     <h1>Office Queue Management System</h1>
                 </Row>
                 <Container className="card-container">
-                    <Row xs={1} md={2} className="g-4 mt-3 mx-4 justify-content-center">
-                        {services.map((s) => (
-                            <ServiceCard key={s.id} serviceTag={s.tag_name} />
-                        ))}
-                    </Row>
+                    {!loading && errMsg && 
+                        <Alert key={"danger"} variant="danger" 
+                            onClose={() => setErrMsg("")} dismissible> {errMsg} </Alert>}
+                    {loading ? 
+                        <Container className="d-flex my-5 justify-content-center">
+                            <Spinner animation="border" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </Spinner>
+                        </Container>
+                        :
+                        <Row xs={1} md={2} className="g-4 mt-3 mx-4 justify-content-center">
+                            {services.map((s) => (
+                                <ServiceCard key={s.id} serviceTag={s.tag_name} serviceId={s.id} 
+                                    setErrMsg={setErrMsg}/>
+                            ))}
+                        </Row>}
                 </Container>
             </main>
         </div>
@@ -38,13 +54,20 @@ function RequestServicePage() {
 }
 
 function ServiceCard(props) {
+    const navigate = useNavigate();
 
-    const createNewTicket = async () => {
-        // TO-DO: post a new ticket request and redirect to the ticket details page
+    const newTicket = async () => {
+        try {
+            // post a new ticket request and redirect to the ticket details page
+            const { ticketNumber } = await createNewTicket(props.serviceId);
+            navigate(`/tickets/${ticketNumber}`);
+        } catch (err) {
+            props.setErrMsg(err.message);
+        }
     }
 
     return (
-        <Card style={{ width: "18rem" }} id="service-card" className="text-center m-4" onClick={createNewTicket}>
+        <Card style={{ width: "18rem" }} id="service-card" className="text-center m-4" onClick={newTicket}>
             {/* temporary image */}
             <Card.Img className="card-icon" variant="top" src="logo192.png" />
 

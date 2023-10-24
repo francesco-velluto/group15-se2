@@ -20,12 +20,24 @@ export const getAllAvailableServices = async () => {
     }
 }
 
-export const createNewTicket = (serviceId) => {
-    return fetch(`${APIUrl}/tickets`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(serviceId),
-    })
+export const createNewTicket = async (serviceId) => {
+    try {
+        const response = await fetch(`${APIUrl}/tickets`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(serviceId),
+        });
+        if (response.ok) {
+            const ticket = await response.json();
+            return ticket;
+        } else {
+            const errMessage = await response.text();
+            throw new Error(response.statusText + " " + errMessage);
+        }
+    } catch (err) {
+        throw new Error(err); // propagate error
+    }
+    return 
 }
