@@ -5,7 +5,7 @@
 -- Dumped from database version 16.0 (Debian 16.0-2)
 -- Dumped by pg_dump version 16.0 (Debian 16.0-2)
 
--- Started on 2023-10-21 15:54:25 CEST
+-- Started on 2023-10-24 16:39:12 CEST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -18,11 +18,9 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
--- remove the comment this line if the database exists
 DROP DATABASE "Office-Queue-Management-System";
-
 --
--- TOC entry 3379 (class 1262 OID 16390)
+-- TOC entry 3379 (class 1262 OID 16731)
 -- Name: Office-Queue-Management-System; Type: DATABASE; Schema: -; Owner: postgres
 --
 
@@ -68,7 +66,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 216 (class 1259 OID 16416)
+-- TOC entry 215 (class 1259 OID 16732)
 -- Name: counter; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -80,7 +78,7 @@ CREATE TABLE public.counter (
 ALTER TABLE public.counter OWNER TO postgres;
 
 --
--- TOC entry 218 (class 1259 OID 16431)
+-- TOC entry 216 (class 1259 OID 16735)
 -- Name: handled; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -93,20 +91,21 @@ CREATE TABLE public.handled (
 ALTER TABLE public.handled OWNER TO postgres;
 
 --
--- TOC entry 215 (class 1259 OID 16392)
+-- TOC entry 217 (class 1259 OID 16738)
 -- Name: service; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.service (
     id integer NOT NULL,
-    tag_name character varying NOT NULL
+    tag_name character varying NOT NULL,
+    service_time integer NOT NULL
 );
 
 
 ALTER TABLE public.service OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 16421)
+-- TOC entry 218 (class 1259 OID 16743)
 -- Name: ticket; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -120,8 +119,8 @@ CREATE TABLE public.ticket (
 ALTER TABLE public.ticket OWNER TO postgres;
 
 --
--- TOC entry 3371 (class 0 OID 16416)
--- Dependencies: 216
+-- TOC entry 3370 (class 0 OID 16732)
+-- Dependencies: 215
 -- Data for Name: counter; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -135,8 +134,8 @@ INSERT INTO public.counter VALUES (6);
 
 
 --
--- TOC entry 3373 (class 0 OID 16431)
--- Dependencies: 218
+-- TOC entry 3371 (class 0 OID 16735)
+-- Dependencies: 216
 -- Data for Name: handled; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -169,24 +168,24 @@ INSERT INTO public.handled VALUES (6, 3);
 
 
 --
--- TOC entry 3370 (class 0 OID 16392)
--- Dependencies: 215
+-- TOC entry 3372 (class 0 OID 16738)
+-- Dependencies: 217
 -- Data for Name: service; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.service VALUES (2, 'Postal Stamps');
-INSERT INTO public.service VALUES (3, 'Money Orders');
-INSERT INTO public.service VALUES (4, 'P.O. Box Services');
-INSERT INTO public.service VALUES (5, 'Postage Supplies');
-INSERT INTO public.service VALUES (6, 'Package Tracking');
-INSERT INTO public.service VALUES (7, 'Registered Mail');
-INSERT INTO public.service VALUES (0, 'Package Shipping');
-INSERT INTO public.service VALUES (1, 'Mail Forwarding');
+INSERT INTO public.service VALUES (2, 'Postal Stamps', 4);
+INSERT INTO public.service VALUES (3, 'Money Orders', 25);
+INSERT INTO public.service VALUES (4, 'P.O. Box Services', 13);
+INSERT INTO public.service VALUES (5, 'Postage Supplies', 4);
+INSERT INTO public.service VALUES (6, 'Package Tracking', 8);
+INSERT INTO public.service VALUES (7, 'Registered Mail', 8);
+INSERT INTO public.service VALUES (0, 'Package Shipping', 11);
+INSERT INTO public.service VALUES (1, 'Mail Forwarding', 13);
 
 
 --
--- TOC entry 3372 (class 0 OID 16421)
--- Dependencies: 217
+-- TOC entry 3373 (class 0 OID 16743)
+-- Dependencies: 218
 -- Data for Name: ticket; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -201,7 +200,7 @@ INSERT INTO public.ticket VALUES (2, 0, 3);
 
 
 --
--- TOC entry 3219 (class 2606 OID 16420)
+-- TOC entry 3215 (class 2606 OID 16747)
 -- Name: counter counter_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -210,7 +209,7 @@ ALTER TABLE ONLY public.counter
 
 
 --
--- TOC entry 3223 (class 2606 OID 16445)
+-- TOC entry 3217 (class 2606 OID 16749)
 -- Name: handled handled_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -219,7 +218,7 @@ ALTER TABLE ONLY public.handled
 
 
 --
--- TOC entry 3215 (class 2606 OID 16413)
+-- TOC entry 3219 (class 2606 OID 16751)
 -- Name: service service_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -228,7 +227,7 @@ ALTER TABLE ONLY public.service
 
 
 --
--- TOC entry 3217 (class 2606 OID 16447)
+-- TOC entry 3221 (class 2606 OID 16753)
 -- Name: service service_un; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -237,7 +236,7 @@ ALTER TABLE ONLY public.service
 
 
 --
--- TOC entry 3221 (class 2606 OID 16430)
+-- TOC entry 3223 (class 2606 OID 16755)
 -- Name: ticket ticket_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -246,7 +245,7 @@ ALTER TABLE ONLY public.ticket
 
 
 --
--- TOC entry 3225 (class 2606 OID 16434)
+-- TOC entry 3224 (class 2606 OID 16756)
 -- Name: handled handled_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -255,7 +254,7 @@ ALTER TABLE ONLY public.handled
 
 
 --
--- TOC entry 3226 (class 2606 OID 16439)
+-- TOC entry 3225 (class 2606 OID 16761)
 -- Name: handled handled_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -264,7 +263,7 @@ ALTER TABLE ONLY public.handled
 
 
 --
--- TOC entry 3224 (class 2606 OID 16424)
+-- TOC entry 3226 (class 2606 OID 16766)
 -- Name: ticket ticket_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -272,7 +271,7 @@ ALTER TABLE ONLY public.ticket
     ADD CONSTRAINT ticket_fk FOREIGN KEY (service_id) REFERENCES public.service(id);
 
 
--- Completed on 2023-10-21 15:54:26 CEST
+-- Completed on 2023-10-24 16:39:12 CEST
 
 --
 -- PostgreSQL database dump complete
