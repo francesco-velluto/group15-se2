@@ -55,11 +55,7 @@ BackendInterface.getTicketDetails(ticketNumber)
     - Return value: 
 
         ```javascript
-        { ticketNumber: string, service: string, status: string, estimatedTime: number }
-        
-        Example:
-
-        {ticketNumber: "4", service: "Postal Stamps", status: "waiting", estimatedTime: 45}
+        {ticketNumber: "4"}
         ```
         It can also return an error in case of failure on the backend side or a wrong service type requested
 
