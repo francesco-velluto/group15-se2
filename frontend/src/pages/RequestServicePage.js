@@ -67,10 +67,11 @@ function ServiceCard(props) {
     }
 
     return (
-        <Card style={{ width: "18rem" }} id="service-card" className="text-center m-4" onClick={newTicket}>
+        <Card style={{ width: "18rem" }} id="service-card" className="text-center justify-content-center align-items-center m-4" onClick={newTicket}>
             {/* temporary image */}
-            <Card.Img className="card-icon" variant="top" src="logo192.png" />
-
+            <Card.Img className="card-icon pt-2" variant="top" src="logo192.png"
+                style={{ maxWidth: '128px', maxHeight: '128px', width: 'auto', height: 'auto' }} />
+            
             <Card.Body>
                 <Card.Title>{props.serviceTag}</Card.Title>
             </Card.Body>
