@@ -1,14 +1,11 @@
 import { useParams } from "react-router-dom";
 
 import * as BackendInterface from "../api/BackendInterface";
-import { getTicketTimeEstimation } from "../services/TimeEstimation";
 
 function TicketDetailsPage() {
     const { ticketNumber } = useParams();
 
-    const estimatedWaitingTime = getTicketTimeEstimation(ticketNumber);
-
-    console.log(estimatedWaitingTime);
+   
 
     // TODO - implement ticket details page
 
