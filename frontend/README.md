@@ -58,6 +58,14 @@ BackendInterface.getTicketDetails(ticketNumber)
         {ticketNumber: "4"}
         ```
         It can also return an error in case of failure on the backend side or a wrong service type requested
+- ### getTicketDetails
+    It retrieves all the information about a single ticket.
+
+    - Parameters: `ticketId`
+    - Return value:
+        ```javascript
+        { ticketNumber: "4", service: "0", status: "waiting", estimatedTime: 45 }
+        ```
 
 ## Pages
 
