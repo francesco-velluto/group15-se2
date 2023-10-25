@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { Row, Col, Button, CardHeader, Card, Container, Alert, CardText, CardBody, CardTitle, CardFooter } from 'react-bootstrap';
 import { getTicketDetails } from "../api/BackendInterface";
 import { useEffect, useState } from "react";
-import { ArrowLeft } from 'react-bootstrap-icons';
+//import { ArrowLeft } from 'react-bootstrap-icons';
 import { useNavigate } from "react-router-dom";
 
 

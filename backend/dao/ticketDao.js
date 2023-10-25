@@ -44,7 +44,6 @@ exports.insertTicket = async(service, num)=>{
     try{
         const timestamp = new Date();
         let r = await db.query('INSERT INTO ticket (number, service_id, status, date) VALUES ($1, $2, 0, $3);', [num, service, timestamp]);
-        console.log(r);
         return ({tickeNumber: num});
     }catch(err){
         console.log(err);

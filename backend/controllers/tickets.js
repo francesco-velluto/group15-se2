@@ -3,56 +3,7 @@
 const ticketDao = require("../dao/ticketDao");
 const serviceDao = require("../dao/serviceDao");
 const handlingDao = require("../dao/handledDao");
-
-const getWaitTimeEstimation = async (ticketNumber) => {
-
-    if(!ticketNumber){
-        return null;
-    }
-
-    const tickets = await ticketDao.getAllTickets();
-
-    const ticket = tickets.find((t) => (t.number === ticketNumber))
-
-    if(!ticket){
-        return null;
-    }
-
-    if(ticket.status !== "waiting"){
-
-        return null;
-
-    }
-    else{
-        const service = (await serviceDao.getAllServices()).find((s) => (s.id === ticket.service));
-
-        const nr = tickets.filter((t) => (t.service == ticket.service && t.status === "waiting")).length;
-
-        const counter_handlings = await handlingDao.getAllHandlings();
-
-        const filtered_handlings = counter_handlings.filter((h) => (counter_handlings.find((ch) => (ch.service_id === service.id && h.number === ch.number))));
-        
-        const handling_map = new Map();
-
-        filtered_handlings.forEach((fh) => {
-            if(handling_map.has(fh.number)){
-                handling_map.set(fh.number, handling_map.get(fh.number) + 1);
-            }
-            else{
-                handling_map.set(fh.number, 1);
-            }
-        })
-
-        let sum = 0.0;
-
-        
-        for (const fh of handling_map.values()) {
-            sum += 1 / fh;
-        }
-
-        return service.service_time * ((nr)/(sum) + 0.5); //estimated waiting time
-    }
-}
+const dayjs = require("dayjs");
 
 module.exports = {
     /**
@@ -88,12 +39,11 @@ module.exports = {
             else {
                 const service = (await serviceDao.getAllServices()).find((s) => (s.id === ticket.service));
 
-                const nr = (await ticketDao.getAllTickets()).filter((t) => (t.service == ticket.service && t.status === "waiting")).length;
-                
+                const nr = (await ticketDao.getAllTickets()).filter((t) => (t.service == ticket.service && t.status === "waiting" && dayjs(t.date).isBefore(ticket.date))).length;
+
                 const counter_handlings = await handlingDao.getAllHandlings();
 
                 const filtered_handlings = counter_handlings.filter((h) => (counter_handlings.find((ch) => (ch.service_id === service.id && h.number === ch.number))));
-
                 const handling_map = new Map();
 
                 filtered_handlings.forEach((fh) => {
