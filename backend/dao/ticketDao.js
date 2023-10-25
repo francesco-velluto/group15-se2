@@ -25,9 +25,9 @@ exports.getAllTickets = async () => {
 /**
  * Get the last ticket number related to a service
  */
-exports.getLastTicketNumberByService = async(service)=>{
+exports.getLastTicketNumberByService = async()=>{
     try{
-        let r = await db.query('SELECT MAX(number) from ticket WHERE service_id = $1', [service]);
+        let r = await db.query('SELECT MAX(number) from ticket');
         if (r.rows[0].max == null)
             return 0;
         else return r.rows[0].max;
@@ -43,7 +43,7 @@ exports.getLastTicketNumberByService = async(service)=>{
 exports.insertTicket = async(service, num)=>{
     try{
         const timestamp = new Date();
-        let r = await db.query('INSERT INTO ticket (number, service_id, status, date, counter_number) VALUES ($1, $2, 0, $3, 1);', [num, service, timestamp]);
+        let r = await db.query('INSERT INTO ticket (number, service_id, status, date) VALUES ($1, $2, 0, $3);', [num, service, timestamp]);
         return ({tickeNumber: num});
     }catch(err){
         console.log(err);

@@ -47,12 +47,11 @@ module.exports = {
             return res.status(404).send('Invalid serviceId')
         // TODO: implement new ticket
         try {
-            const last_id = await ticketDao.getLastTicketNumberByService(serviceId);
+            const last_id = await ticketDao.getLastTicketNumberByService();
             const new_number = last_id +1;
-            let newRow = await ticketDao.insertTicket(serviceId, new_number);
+            await ticketDao.insertTicket(serviceId, new_number);
 
             console.log(new_number);
-
 
             res.json(new_number);
             
