@@ -29,40 +29,50 @@ module.exports = {
 
         //waiting time estimation done by Ferraro Elia
 
-        const ticket = tickets.find((t) => (t.number === req.params.ticketNumber))
+        let estimated_waiting_time;
+
+        const ticket = tickets.find((t) => (t.number === 2))
 
         if(!ticket){
             return res.status(400).json("Cannot retrieve information about this ticket!");
         }
 
-        const service = (await serviceDao.getAllServices()).find((s) => (s.id === ticket.service));
+        if(ticket.status !== "waiting"){
 
-        const nr = tickets.filter((t) => (t.service == ticket.service)).length;
+            estimated_waiting_time = null;
 
-        const counter_handlings = await handlingDao.getAllHandlings();
+        }
+        else{
+            const service = (await serviceDao.getAllServices()).find((s) => (s.id === ticket.service));
 
-        const filtered_handlings = counter_handlings.filter((h) => (counter_handlings.find((ch) => (ch.service_id === service.id && h.number === ch.number))));
-        
-        const handling_map = new Map();
+            const nr = tickets.filter((t) => (t.service == ticket.service && t.status === "waiting")).length;
 
-        filtered_handlings.forEach((fh) => {
-            if(handling_map.has(fh.number)){
-                handling_map.set(fh.number, handling_map.get(fh.number) + 1);
+            const counter_handlings = await handlingDao.getAllHandlings();
+
+            const filtered_handlings = counter_handlings.filter((h) => (counter_handlings.find((ch) => (ch.service_id === service.id && h.number === ch.number))));
+            
+            const handling_map = new Map();
+
+            filtered_handlings.forEach((fh) => {
+                if(handling_map.has(fh.number)){
+                    handling_map.set(fh.number, handling_map.get(fh.number) + 1);
+                }
+                else{
+                    handling_map.set(fh.number, 1);
+                }
+            })
+
+            let sum = 0.0;
+
+            
+            for (const fh of handling_map.values()) {
+                sum += 1 / fh;
             }
-            else{
-                handling_map.set(fh.number, 1);
-            }
-        })
 
-        let sum = 0.0;
-
-        
-        for (const fh of handling_map.values()) {
-            sum += 1 / fh;
+            estimated_waiting_time = service.service_time * ((nr)/(sum) + 0.5); //this is the final estimated time to be included the the response data
         }
 
-        const estimated_waiting_time = service.service_time * ((nr)/(sum) + 0.5); //this is the final estimated time to be included the the response data
-
+        
 
     },
 
