@@ -27,7 +27,7 @@ export const createNewTicket = async (serviceId) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(serviceId),
+            body: JSON.stringify({serviceId}), // I put an object instead of just a number because there was a problem on it (Elia)
         });
         if (response.ok) {
             const ticket = await response.json();

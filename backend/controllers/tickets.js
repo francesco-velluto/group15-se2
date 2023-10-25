@@ -4,6 +4,56 @@ const ticketDao = require("../dao/ticketDao");
 const serviceDao = require("../dao/serviceDao");
 const handlingDao = require("../dao/handledDao");
 
+const getWaitTimeEstimation = async (ticketNumber) => {
+
+    if(!ticketNumber){
+        return null;
+    }
+
+    const tickets = await ticketDao.getAllTickets();
+
+    const ticket = tickets.find((t) => (t.number === ticketNumber))
+
+    if(!ticket){
+        return null;
+    }
+
+    if(ticket.status !== "waiting"){
+
+        return null;
+
+    }
+    else{
+        const service = (await serviceDao.getAllServices()).find((s) => (s.id === ticket.service));
+
+        const nr = tickets.filter((t) => (t.service == ticket.service && t.status === "waiting")).length;
+
+        const counter_handlings = await handlingDao.getAllHandlings();
+
+        const filtered_handlings = counter_handlings.filter((h) => (counter_handlings.find((ch) => (ch.service_id === service.id && h.number === ch.number))));
+        
+        const handling_map = new Map();
+
+        filtered_handlings.forEach((fh) => {
+            if(handling_map.has(fh.number)){
+                handling_map.set(fh.number, handling_map.get(fh.number) + 1);
+            }
+            else{
+                handling_map.set(fh.number, 1);
+            }
+        })
+
+        let sum = 0.0;
+
+        
+        for (const fh of handling_map.values()) {
+            sum += 1 / fh;
+        }
+
+        return service.service_time * ((nr)/(sum) + 0.5); //estimated waiting time
+    }
+}
+
 module.exports = {
     /**
      * Get ticket details by ticket number
@@ -26,51 +76,12 @@ module.exports = {
 
         console.log(tickets);
 
+        const estimated_waiting_time = getWaitTimeEstimation(req.params.ticketNumber); // waiting time estimation for the single ticket
+
 
         //waiting time estimation done by Ferraro Elia
 
-        let estimated_waiting_time;
-
-        const ticket = tickets.find((t) => (t.number === 2))
-
-        if(!ticket){
-            return res.status(400).json("Cannot retrieve information about this ticket!");
-        }
-
-        if(ticket.status !== "waiting"){
-
-            estimated_waiting_time = null;
-
-        }
-        else{
-            const service = (await serviceDao.getAllServices()).find((s) => (s.id === ticket.service));
-
-            const nr = tickets.filter((t) => (t.service == ticket.service && t.status === "waiting")).length;
-
-            const counter_handlings = await handlingDao.getAllHandlings();
-
-            const filtered_handlings = counter_handlings.filter((h) => (counter_handlings.find((ch) => (ch.service_id === service.id && h.number === ch.number))));
-            
-            const handling_map = new Map();
-
-            filtered_handlings.forEach((fh) => {
-                if(handling_map.has(fh.number)){
-                    handling_map.set(fh.number, handling_map.get(fh.number) + 1);
-                }
-                else{
-                    handling_map.set(fh.number, 1);
-                }
-            })
-
-            let sum = 0.0;
-
-            
-            for (const fh of handling_map.values()) {
-                sum += 1 / fh;
-            }
-
-            estimated_waiting_time = service.service_time * ((nr)/(sum) + 0.5); //this is the final estimated time to be included the the response data
-        }
+        
 
         
 
