@@ -1,36 +1,73 @@
 import { useParams } from "react-router-dom";
+import { Row, Col, CardHeader, Card, Container, Alert, CardText, CardBody, CardTitle } from 'react-bootstrap';
+import { getTicketDetails } from "../api/BackendInterface";
+import { useEffect, useState } from "react";
+import { ArrowLeft } from 'react-bootstrap-icons';
+import { useNavigate } from "react-router-dom";
 
-import * as BackendInterface from "../api/BackendInterface";
+
 
 function TicketDetailsPage() {
     const { ticketNumber } = useParams();
-    //const [ticket, setTicket] = useState({});
+    const [errorMsg, setErrorMsg] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [ticket, setTicket] = useState();
+    const navigate = useNavigate();
     // TODO - implement ticket details page
 
-    
-       // EXAMPLE OF API CALL USAGE:
+    useEffect(() => {
+        fetchGetTicket(ticketNumber);
 
-        BackendInterface.getTicketDetails(ticketNumber)
-            .then((response) => {
-                if(response.status === 200)
-                    return response.json();
+    }, []);
 
-                // handle error
-                throw new Error("Error in response");
-            }).then((data) => {
+    // EXAMPLE OF API CALL USAGE:
 
-                // handle data
-                //console.log(data);
-            }).catch((error) => {
-                // handle error
-                console.log(error);
-            });
-     
+
+
+    const fetchGetTicket = async () => {
+
+        try {
+            const t = await getTicketDetails(ticketNumber);
+
+            setTicket(t);
+        } catch (err) {
+            setTicket({});
+            setErrorMsg(err.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
 
     return (
-        <div>
-            <h1>Ticket Details Page</h1>
-        </div>
+        <>
+            <div>
+                <Row className="title-navbar text-center py-3">
+                    <h1>Office Queue Management System</h1>
+                </Row>
+                <Container className='p-3 text-center'>
+                    <Row>
+                        <Col></Col>
+                        <Col>
+                        <Card>
+                            <CardHeader>
+                                {errorMsg ? <Alert variant='danger' onClose={() => setErrorMsg('')} dismissible={true}>{errorMsg}</Alert>
+                                    : <h1>Ticket number: {ticket.number}</h1>}
+                            </CardHeader>
+                            <CardBody>
+                                <CardTitle>Service: {ticket.service}</CardTitle>
+                                <CardTitle>Status: {ticket.status}</CardTitle>
+                                
+                            </CardBody>
+
+                        </Card>
+                        </Col>
+                        <Col></Col>
+                    </Row>
+                </Container>
+
+            </div>
+        </>
     );
 }
 

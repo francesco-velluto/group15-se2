@@ -44,7 +44,36 @@ exports.insertTicket = async(service, num)=>{
     try{
         const timestamp = new Date();
         let r = await db.query('INSERT INTO ticket (number, service_id, status, date) VALUES ($1, $2, 0, $3);', [num, service, timestamp]);
+        console.log(r);
         return ({tickeNumber: num});
+    }catch(err){
+        console.log(err);
+        throw err;
+    }
+}
+
+/**
+ * Get the ticket details given by number
+ */
+exports.getTicketDetails = async(number)=>{
+    try{
+        let r = await db.query('SELECT * FROM ticket where number = $1;', [number]);
+        return mapObjToTickets(r.rows[0]);
+    }catch(err){
+        console.log(err);
+        throw err;
+    }
+}
+
+/**
+ * Control if a ticket exists
+ */
+exports.controlTicketNumber = async(number) =>{
+    try{
+        let r = await db.query('SELECT COUNT(*) FROM ticket WHERE number = $1;', [number]);
+        if (r.rows[0].count == 0)
+            return ({exists: false});
+        return ({exists: true});
     }catch(err){
         console.log(err);
         throw err;

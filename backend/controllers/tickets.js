@@ -13,12 +13,24 @@ module.exports = {
      * @error: 500 - internal server error if something went wrong
      */
     getTicketDetails: async (req, res) => {
+
         let ticketNumber = req.params.ticketNumber;
+        
 
-        console.log(ticketNumber);
-
+        if (ticketNumber == null)
+            res.status(404).send('Ticket number is required');
         // TODO: implement get ticket details
+        try{
+            const exists = await ticketDao.controlTicketNumber(ticketNumber);
+            if (!exists.exists)
+                res.status(400).send('Ticket absent');
 
+            const ticket = await ticketDao.getTicketDetails(ticketNumber);
+            res.json({ticket});
+
+        }catch (err) {
+            res.status(500).json({ error: err });
+        } 
         // TODO: use the relative Ticket model
 
         // testing db connection done by Magliari Elio
@@ -38,7 +50,6 @@ module.exports = {
      * @error: 500 - internal server error if something went wrong
      */
     newTicket: async (req, res) => {
-        debugger;
         let serviceId = req.body.serviceId;
         if (serviceId == null)
             return res.status(400).send('serviceId is required')
@@ -50,8 +61,6 @@ module.exports = {
             const last_id = await ticketDao.getLastTicketNumberByService();
             const new_number = last_id +1;
             await ticketDao.insertTicket(serviceId, new_number);
-
-            console.log(new_number);
 
             res.json(new_number);
             
