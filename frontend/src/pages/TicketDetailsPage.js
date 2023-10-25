@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 //import { ArrowLeft } from 'react-bootstrap-icons';
 import { useNavigate } from "react-router-dom";
 
-
+import dayjs from "dayjs"
 
 function TicketDetailsPage() {
     const { ticketNumber } = useParams();
@@ -59,8 +59,8 @@ function TicketDetailsPage() {
                             <CardBody>
                                 <CardTitle>Service: {ticket.service}</CardTitle>
                                 <CardTitle>Status: {ticket.status}</CardTitle>
-                                <CardTitle>Date: {ticket.date}</CardTitle>
-                                <CardTitle>Estimated waiting time: {ticket.estimated_waiting_time}</CardTitle>
+                                <CardTitle>Date: {dayjs(ticket.date).format("DD/MM/YYYY, HH:mm:ss")}</CardTitle>
+                                <CardTitle>Estimated waiting time: {ticket.estimated_waiting_time} min</CardTitle>
                                 
                             </CardBody>
                             <CardFooter>
