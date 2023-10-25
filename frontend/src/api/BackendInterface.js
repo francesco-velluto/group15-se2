@@ -7,7 +7,7 @@ export const getTicketDetails = async(ticketId) => {
         const response = await fetch(`${APIUrl}/tickets/${ticketId}`);
 
         if (response.ok){
-            const {ticket} = await response.json();
+            const ticket = await response.json();
             return ticket;
         }else{
             const errMessage = await response.text();

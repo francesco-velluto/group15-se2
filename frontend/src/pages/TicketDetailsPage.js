@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Row, Col, CardHeader, Card, Container, Alert, CardText, CardBody, CardTitle } from 'react-bootstrap';
+import { Row, Col, Button, CardHeader, Card, Container, Alert, CardText, CardBody, CardTitle, CardFooter } from 'react-bootstrap';
 import { getTicketDetails } from "../api/BackendInterface";
 import { useEffect, useState } from "react";
 import { ArrowLeft } from 'react-bootstrap-icons';
@@ -11,13 +11,17 @@ function TicketDetailsPage() {
     const { ticketNumber } = useParams();
     const [errorMsg, setErrorMsg] = useState("");
     const [loading, setLoading] = useState(true);
-    const [ticket, setTicket] = useState();
+    const [ticket, setTicket] = useState({});
     const navigate = useNavigate();
     // TODO - implement ticket details page
 
     useEffect(() => {
-        fetchGetTicket(ticketNumber);
-
+        getTicketDetails(ticketNumber).then(t=>{
+            setTicket(t);
+        }).catch(err=>{
+            setTicket({});
+            setErrorMsg(err.message);
+        })
     }, []);
 
     // EXAMPLE OF API CALL USAGE:
@@ -25,10 +29,8 @@ function TicketDetailsPage() {
 
 
     const fetchGetTicket = async () => {
-
         try {
             const t = await getTicketDetails(ticketNumber);
-
             setTicket(t);
         } catch (err) {
             setTicket({});
@@ -57,9 +59,15 @@ function TicketDetailsPage() {
                             <CardBody>
                                 <CardTitle>Service: {ticket.service}</CardTitle>
                                 <CardTitle>Status: {ticket.status}</CardTitle>
+                                <CardTitle>Date: {ticket.date}</CardTitle>
+                                <CardTitle>Estimated waiting time: {ticket.estimated_waiting_time}</CardTitle>
                                 
                             </CardBody>
-
+                            <CardFooter>
+                                <Button onClick={() => navigate('/') }>
+                                    New service
+                                </Button>
+                            </CardFooter>
                         </Card>
                         </Col>
                         <Col></Col>
