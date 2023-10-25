@@ -1,38 +1,81 @@
 import { useParams } from "react-router-dom";
+import { Row, Col, Button, CardHeader, Card, Container, Alert, CardText, CardBody, CardTitle, CardFooter } from 'react-bootstrap';
+import { getTicketDetails } from "../api/BackendInterface";
+import { useEffect, useState } from "react";
+import { ArrowLeft } from 'react-bootstrap-icons';
+import { useNavigate } from "react-router-dom";
 
-import * as BackendInterface from "../api/BackendInterface";
+
 
 function TicketDetailsPage() {
     const { ticketNumber } = useParams();
-
-   
-
+    const [errorMsg, setErrorMsg] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [ticket, setTicket] = useState({});
+    const navigate = useNavigate();
     // TODO - implement ticket details page
 
-    /**
-        EXAMPLE OF API CALL USAGE:
+    useEffect(() => {
+        getTicketDetails(ticketNumber).then(t=>{
+            setTicket(t);
+        }).catch(err=>{
+            setTicket({});
+            setErrorMsg(err.message);
+        })
+    }, []);
 
-        BackendInterface.getTicketDetails(ticketNumber)
-            .then((response) => {
-                if(response.status === 200)
-                    return response.json();
+    // EXAMPLE OF API CALL USAGE:
 
-                // handle error
-                throw new Error("Error in response");
-            }).then((data) => {
 
-                // handle data
-                console.log(data);
-            }).catch((error) => {
-                // handle error
-                console.log(error);
-            });
-     */
+
+    const fetchGetTicket = async () => {
+        try {
+            const t = await getTicketDetails(ticketNumber);
+            setTicket(t);
+        } catch (err) {
+            setTicket({});
+            setErrorMsg(err.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
 
     return (
-        <div>
-            <h1>Ticket Details Page</h1>
-        </div>
+        <>
+            <div>
+                <Row className="title-navbar text-center py-3">
+                    <h1>Office Queue Management System</h1>
+                </Row>
+                <Container className='p-3 text-center'>
+                    <Row>
+                        <Col></Col>
+                        <Col>
+                        <Card>
+                            <CardHeader>
+                                {errorMsg ? <Alert variant='danger' onClose={() => setErrorMsg('')} dismissible={true}>{errorMsg}</Alert>
+                                    : <h1>Ticket number: {ticket.number}</h1>}
+                            </CardHeader>
+                            <CardBody>
+                                <CardTitle>Service: {ticket.service}</CardTitle>
+                                <CardTitle>Status: {ticket.status}</CardTitle>
+                                <CardTitle>Date: {ticket.date}</CardTitle>
+                                <CardTitle>Estimated waiting time: {ticket.estimated_waiting_time}</CardTitle>
+                                
+                            </CardBody>
+                            <CardFooter>
+                                <Button onClick={() => navigate('/') }>
+                                    New service
+                                </Button>
+                            </CardFooter>
+                        </Card>
+                        </Col>
+                        <Col></Col>
+                    </Row>
+                </Container>
+
+            </div>
+        </>
     );
 }
 

@@ -1,7 +1,22 @@
+import { json } from "react-router-dom";
+
 const APIUrl = 'http://localhost:8080/api';
 
-export const getTicketDetails = (ticketId) => {
-    return fetch(`${APIUrl}/tickets/${ticketId}`)
+export const getTicketDetails = async(ticketId) => {
+    try{
+        const response = await fetch(`${APIUrl}/tickets/${ticketId}`);
+
+        if (response.ok){
+            const ticket = await response.json();
+            return ticket;
+        }else{
+            const errMessage = await response.text();
+            throw new Error(response.statusText + " " + errMessage);
+        }
+    }catch(err){
+        throw new Error(err); // propagate error
+    }
+    
 }
 
 export const getAllAvailableServices = async () => {
@@ -21,6 +36,7 @@ export const getAllAvailableServices = async () => {
 }
 
 export const createNewTicket = async (serviceId) => {
+    
     try {
         const response = await fetch(`${APIUrl}/tickets`, {
             method: 'POST',
@@ -31,6 +47,7 @@ export const createNewTicket = async (serviceId) => {
         });
         if (response.ok) {
             const ticket = await response.json();
+            
             return ticket;
         } else {
             const errMessage = await response.text();
