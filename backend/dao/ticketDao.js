@@ -5,7 +5,7 @@ const Ticket = require("../model/Ticket");
 
 const mapObjToTickets = (ticket) => {
     const service = ticket.service_id;                  // it should be converted to a service model calling his dao and getting all his information by id
-    return new Ticket(ticket.number, ticket.status,  service);
+    return new Ticket(ticket.number, ticket.status, ticket.date, service, ticket.counter_number ?? undefined);
 }
 
 

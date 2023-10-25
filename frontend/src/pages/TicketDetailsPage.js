@@ -5,6 +5,8 @@ import * as BackendInterface from "../api/BackendInterface";
 function TicketDetailsPage() {
     const { ticketNumber } = useParams();
 
+   
+
     // TODO - implement ticket details page
 
     /**
