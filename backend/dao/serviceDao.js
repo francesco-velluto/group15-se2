@@ -4,7 +4,7 @@ const db = require("./db");
 const Service = require("../model/Service");
 
 const mapObjToService = (service) => {
-    return new Service(service.id, service.tag_name);
+    return new Service(service.id, service.tag_name, service.service_time);
 }
 
 
