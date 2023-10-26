@@ -14,7 +14,7 @@ const mapObjToTickets = (ticket) => {
  */
 exports.getAllTickets = async () => {
     try {
-        let tickets = await db.query('SELECT * FROM ticket');           // it gets all tickets from the db
+        let tickets = await db.query('SELECT number, service_id, status, date, counter_number, tag_name FROM ticket, service WHERE service_id = id;' );           // it gets all tickets from the db
         return tickets.rows.map(ticket => mapObjToTickets(ticket));     // it maps each object obtained from the db to the ticket model
     } catch (err) {
         console.log(err);
@@ -63,7 +63,7 @@ exports.getTicketDetails = async(number)=>{
         let r = await db.query(
             'SELECT number, service_id, status, date, counter_number, tag_name\
                 FROM ticket, service\
-                WHERE number = $1 and service_id = service.id;',
+                WHERE number = $1 and service_id = id;',
             [number]);
         return mapObjToTickets(r.rows[0]);
     }catch(err){
