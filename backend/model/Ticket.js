@@ -10,9 +10,10 @@ const statusEnum = {
 /**
  * Ticket model
  */
-module.exports = function Ticket(number = -1, status = 0, date = undefined, service = undefined, counter_number = undefined) {
+module.exports = function Ticket(number = -1, status = 0, date = undefined, service_id = undefined, service_tag = undefined, counter_number = undefined) {
     this.number = number;
-    this.service = service;
+    this.service_id = service_id;
+    this.service_tag = service_tag;
     this.date = date;
     this.counter_number = counter_number;
 
