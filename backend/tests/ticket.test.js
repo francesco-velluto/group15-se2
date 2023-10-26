@@ -123,3 +123,6 @@ describe('controlTicketNumber function', () => {
     });
   });
   
+
+  // TO DO 
+  // TEST FUNCTION FOR insertTicket
