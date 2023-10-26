@@ -24,6 +24,18 @@ function TicketDetailsPage() {
         })
     }, []);
 
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setTicket((t) => {
+                const val = { ...t, estimated_waiting_time: t.estimated_waiting_time - 1 };
+                return val;
+            });
+        }, 60000);
+    
+        // Clean up the interval when the component unmounts or when the effect runs again.
+        return () => clearInterval(intervalId);
+    }, []);
+
     // EXAMPLE OF API CALL USAGE:
 
 
