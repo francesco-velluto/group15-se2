@@ -6,7 +6,7 @@ const db = new Client({
     user: 'postgres',
     host: 'localhost',
     database: 'Office-Queue-Management-System',
-    password: 'group15-postgres',
+    password: 'postgres',
     port: 5432,
 });
 
