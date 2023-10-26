@@ -39,6 +39,8 @@
 
 .title-navbar {
   background-color: #FFFF99;
+  text-decoration: none;
+  color: black;
 }
 
 #service-card {
@@ -50,7 +52,6 @@
 
 #service-card:hover {
   cursor: pointer;
-  background-color: bisque;
 }
 
 .card-container {
@@ -60,4 +61,14 @@
   margin-bottom: 2rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.ticket-info-row {
+  background-color: #FFDAB9;
+  margin-bottom: 2rem;
+  padding: 0.6rem 1rem;
+  /* padding: 1rem 1rem 1rem 1rem; */
+  border-radius: 1.25rem;
+  display: flex;
+  justify-content: center;
 }

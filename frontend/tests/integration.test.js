@@ -1,5 +1,6 @@
 const dayjs = require("dayjs");
 const { Builder, By, until } = require("selenium-webdriver");
+const { getAllTickets } = require("../../backend/dao/ticketDao");
 
 beforeAll(async () => {
   driver = await new Builder().forBrowser("chrome").build();
@@ -21,15 +22,16 @@ describe("Test page to select service", () => {
 
   test("Should redirect to the ticket page when a service card is clicked", async () => {
     await driver.get("http://localhost:3000");
-
+    
     const cards = await driver.findElements(By.id("service-card"));
     const cardTitles = await driver.findElements(By.className("card-title"));
 
     const serviceRequested = "Service: " + await cardTitles[0].getText(); // tag name of the requested service
     const requestDate = dayjs();
+    await new Promise(resolve => setTimeout(resolve, 2000));
     await cards[0].click();
 
-    await driver.wait(until.urlMatches(new RegExp(`^http:\/\/localhost:3000\/tickets\/[0-9]+`)), 10000);
+    await driver.wait(until.urlMatches(new RegExp(`^http:\/\/localhost:3000\/tickets\/[0-9]+`)), 3000);
 
     const currentUrl = await driver.getCurrentUrl();
     const urlbase = "http://localhost:3000/tickets/";
@@ -47,9 +49,12 @@ describe("Test page to select service", () => {
     const ticketDate = ticketTimestamp.slice("Date: ".length, "Date: dd-mm-yyyy".length);
 
     expect(ticketDate).toEqual(requestDate.format("DD/MM/YYYY"));
+
+    const tickets = await getAllTickets();
+    console.log(tickets);
   });
 });
 
 afterAll(async () => {
-  await driver.quit();
+  setTimeout(() => driver.quit(), 2000);
 });

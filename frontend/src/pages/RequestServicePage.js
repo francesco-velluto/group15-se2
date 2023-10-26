@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createNewTicket, getAllAvailableServices } from "../api/BackendInterface";
 import { Alert, Card, Container, Row, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 function RequestServicePage() {
     const [services, setServices] = useState([]);
@@ -24,12 +25,13 @@ function RequestServicePage() {
         fetchServicesList();
     }, []);
 
+    const icons = ["mailstamp.png", "money.png", "parachute.png", "post_send.png", "post_tracking.png", "registered.png"];
+    const colors = ["#E1E1E1", "#FFE1E1", "#A0E1E1", "#E1E1A0", "#E1E1FF", "#E1C1A1"];
+    
     return (
         <div>
             <main>
-                <Row className="title-navbar text-center py-3">
-                    <h1>Office Queue Management System</h1>
-                </Row>
+                <Navbar />
                 <Container className="card-container">
                     {!loading && errMsg && 
                         <Alert key={"danger"} variant="danger" 
@@ -42,8 +44,8 @@ function RequestServicePage() {
                         </Container>
                         :
                         <Row xs={1} md={2} className="g-4 mt-3 mx-4 justify-content-center">
-                            {services.map((s) => (
-                                <ServiceCard key={s.id} serviceTag={s.tag_name} serviceId={s.id} 
+                            {services.map((s, i) => (
+                                <ServiceCard key={s.id} serviceTag={s.tag_name} serviceId={s.id} icon={icons[i%icons.length]} color={colors[i%colors.length]}
                                     setErrMsg={setErrMsg}/>
                             ))}
                         </Row>}
@@ -69,10 +71,10 @@ function ServiceCard(props) {
     }
 
     return (
-        <Card style={{ width: "18rem" }} id="service-card" className="text-center justify-content-center align-items-center m-4" onClick={newTicket}>
+        <Card style={{ width: "18rem", backgroundColor: props.color }} id="service-card" className="text-center justify-content-center align-items-center m-4" onClick={newTicket}>
             {/* temporary image */}
-            <Card.Img className="card-icon pt-2" variant="top" src="logo192.png"
-                style={{ maxWidth: '128px', maxHeight: '128px', width: 'auto', height: 'auto' }} />
+            <Card.Img className="card-icon pt-3" variant="top" src={"service_icons/" + props.icon}
+                style={{ maxWidth: '128px', maxHeight: '128px', width: 'auto', height: '110px'  }} />
             
             <Card.Body>
                 <Card.Title>{props.serviceTag}</Card.Title>
