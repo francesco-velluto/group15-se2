@@ -54,13 +54,13 @@ function TicketDetailsPage() {
                         <Card>
                             <CardHeader>
                                 {errorMsg ? <Alert variant='danger' onClose={() => setErrorMsg('')} dismissible={true}>{errorMsg}</Alert>
-                                    : <h1>Ticket number: {ticket.number}</h1>}
+                                    : <h1>Ticket number: <div id="ticket-number">{ticket.number}</div></h1>}
                             </CardHeader>
                             <CardBody>
-                                <CardTitle>Service: {ticket.service_tag}</CardTitle>
-                                <CardTitle>Status: {ticket.status}</CardTitle>
-                                <CardTitle>Date: {dayjs(ticket.date).format("DD/MM/YYYY, HH:mm:ss")}</CardTitle>
-                                <CardTitle>Estimated waiting time: {ticket.estimated_waiting_time} min</CardTitle>
+                                <CardTitle id="service-tag">Service: {ticket.service_tag}</CardTitle>
+                                <CardTitle id="ticket-status">Status: {ticket.status}</CardTitle>
+                                <CardTitle id="ticket-date">Date: {dayjs(ticket.date).format("DD/MM/YYYY, HH:mm:ss")}</CardTitle>
+                                <CardTitle id="estimated-wait-time">Estimated waiting time: {Math.round(ticket.estimated_waiting_time)} min</CardTitle>
                                 
                             </CardBody>
                             <CardFooter>
