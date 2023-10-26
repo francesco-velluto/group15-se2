@@ -4,8 +4,8 @@ const db = require("./db");
 const Ticket = require("../model/Ticket");
 
 const mapObjToTickets = (ticket) => {
-    const service = ticket.service_id;                  // it should be converted to a service model calling his dao and getting all his information by id
-    return new Ticket(ticket.number, ticket.status, ticket.date, service, ticket.counter_number ?? undefined);
+    const service_tag = ticket.tag_name;
+    return new Ticket(ticket.number, ticket.status, ticket.date, ticket.service_id, service_tag, ticket.counter_number ?? undefined);
 }
 
 
@@ -56,7 +56,11 @@ exports.insertTicket = async(service, num)=>{
  */
 exports.getTicketDetails = async(number)=>{
     try{
-        let r = await db.query('SELECT * FROM ticket where number = $1;', [number]);
+        let r = await db.query(
+            'SELECT number, service_id, status, date, counter_number, tag_name\
+                FROM ticket, service\
+                WHERE number = $1 and service_id = service.id;',
+            [number]);
         return mapObjToTickets(r.rows[0]);
     }catch(err){
         console.log(err);

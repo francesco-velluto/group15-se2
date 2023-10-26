@@ -37,9 +37,9 @@ module.exports = {
                 estimated_waiting_time = null;
             }
             else {
-                const service = (await serviceDao.getAllServices()).find((s) => (s.id === ticket.service));
+                const service = (await serviceDao.getAllServices()).find((s) => (s.id === ticket.service_id));
 
-                const nr = (await ticketDao.getAllTickets()).filter((t) => (t.service == ticket.service && t.status === "waiting" && dayjs(t.date).isBefore(ticket.date))).length;
+                const nr = (await ticketDao.getAllTickets()).filter((t) => (t.service_id == ticket.service_id && t.status === "waiting" && dayjs(t.date).isBefore(ticket.date))).length;
 
                 const counter_handlings = await handlingDao.getAllHandlings();
 
