@@ -43,9 +43,12 @@ exports.getLastTicketNumberByService = async()=>{
 exports.insertTicket = async(service, num)=>{
     try{
         const timestamp = new Date();
-        let r = await db.query('INSERT INTO ticket (number, service_id, status, date) VALUES ($1, $2, 0, $3);', [num, service, timestamp]);
-        // the return is not set correctly 
-        return ({tickeNumber: num});
+        let r = await db.query('INSERT INTO ticket (number, service_id, status, date) VALUES ($1, $2, 0, $3) RETURNING *;', [num, service, timestamp]);
+        // the return is not set correctly
+
+        const number = r.rows[0].number;
+
+        return ({tickeNumber: number});
     }catch(err){
         console.log(err);
         throw err;
