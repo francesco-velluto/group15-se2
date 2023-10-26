@@ -54,6 +54,13 @@
   cursor: pointer;
 }
 
+span {
+  color: red;
+  font-weight: bolder;
+  font-size: x-large;
+  white-space: nowrap;
+}
+
 .card-container {
   background-color: #87CEEB;
   border-radius: 20px;
@@ -65,10 +72,51 @@
 
 .ticket-info-row {
   background-color: #FFDAB9;
-  margin-bottom: 2rem;
-  padding: 0.6rem 1rem;
-  /* padding: 1rem 1rem 1rem 1rem; */
+  margin: 0.9rem;
+  font-weight: bold;
+  font-size: larger;
+  padding: 0.6rem;
   border-radius: 1.25rem;
   display: flex;
   justify-content: center;
+}
+
+.card-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  margin-top: 4%;
+  margin-right: 4%;
+}
+
+@media (max-width: 800px) {
+  .ticket-info-row {
+    margin: 0.2rem;
+    padding: 0rem;
+  }
+
+  span {
+    font-size: smaller;
+  }
+
+  .card-content {
+    width: 50%;
+    margin-top: 0%;
+    margin-right: 4%;
+    font-size: smaller;
+  }
+}
+
+@media (max-width: 900px) {
+  .ticket-info-row {
+    padding: 0.1rem;
+  }
+
+  .card-content {
+    width: 50%;
+    margin-top: 0%;
+    margin-right: 4%;
+  }
 }
