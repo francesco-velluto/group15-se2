@@ -26,7 +26,7 @@ describe("Test page to select service", () => {
     const cards = await driver.findElements(By.id("service-card"));
     const cardTitles = await driver.findElements(By.className("card-title"));
 
-    const serviceRequested = "Service: " + await cardTitles[0].getText(); // tag name of the requested service
+    const serviceRequested = await cardTitles[0].getText(); // tag name of the requested service
     const requestDate = dayjs();
     await new Promise(resolve => setTimeout(resolve, 2000));
     await cards[0].click();
@@ -46,12 +46,9 @@ describe("Test page to select service", () => {
     expect(serviceObtained).toEqual(serviceRequested);
 
     const ticketTimestamp = await driver.findElement(By.id("ticket-date")).getText();
-    const ticketDate = ticketTimestamp.slice("Date: ".length, "Date: dd-mm-yyyy".length);
+    const ticketDate = ticketTimestamp.slice(0, "dd-mm-yyyy".length);
 
     expect(ticketDate).toEqual(requestDate.format("DD/MM/YYYY"));
-
-    const tickets = await getAllTickets();
-    console.log(tickets);
   });
 });
 

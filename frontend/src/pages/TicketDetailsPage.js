@@ -47,8 +47,8 @@ function TicketDetailsPage() {
                     <Card.Img src="/ticket_image.png" style={{ maxHeight: 500, height: "auto", width: "auto" }} />
                     <Card.ImgOverlay>
                         <CardBody className="card-content">
-                            <Row className="ticket-info-row" id="ticket-number">
-                                Ticket number: <span>{ticket.number}</span>
+                            <Row className="ticket-info-row">
+                                Ticket number: <span id="ticket-number">{ticket.number}</span>
                             </Row>
                             <Row className="ticket-info-row" id="service-tag">{ticket.service_tag}</Row>
                             <Row className="ticket-info-row" id="ticket-status">Status: {ticket.status}</Row>
