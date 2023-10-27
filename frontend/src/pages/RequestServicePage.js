@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { createNewTicket, getAllAvailableServices } from "../api/BackendInterface";
-import { Alert, Card, Container, Row, Spinner } from "react-bootstrap";
+import {Alert, Card, Col, Container, Form, Row, Spinner} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 
 function RequestServicePage() {
+    const navigate = useNavigate();
+
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errMsg, setErrMsg] = useState("");
@@ -20,6 +22,11 @@ function RequestServicePage() {
             setLoading(false);
         }
     };
+
+    const navigateToTicketDetailsPage = () => {
+        const ticketNumber = document.querySelector("#ticket-number").value;
+        navigate(`/tickets/${ticketNumber}`);
+    }
 
     useEffect(() => {
         fetchServicesList();
@@ -43,12 +50,28 @@ function RequestServicePage() {
                             </Spinner>
                         </Container>
                         :
-                        <Row xs={1} md={2} className="g-4 mt-3 mx-4 justify-content-center">
-                            {services.map((s, i) => (
-                                <ServiceCard key={s.id} serviceTag={s.tag_name} serviceId={s.id} icon={icons[i%icons.length]} color={colors[i%colors.length]}
-                                    setErrMsg={setErrMsg}/>
-                            ))}
-                        </Row>}
+                        <>
+                            <Form className="d-flex justify-content-center">
+                                <Form.Group>
+                                    <Form.Label><b>Already have a ticket?</b> Search your ticket by ticket number below to get the details.</Form.Label>
+                                    <Row xs={1} md={2} className="d-flex justify-content-center">
+                                        <Col md={7}>
+                                            <Form.Control type="text" placeholder="Ticket number" id="ticket-number" />
+                                        </Col>
+                                        <Col md={3}>
+                                            <Form.Control type="button" value="Search" className="btn btn-primary" onClick={navigateToTicketDetailsPage} />
+                                        </Col>
+                                    </Row>
+                                </Form.Group>
+                            </Form>
+                            <Row xs={1} md={2} className="g-4 mt-3 mx-4 justify-content-center">
+                                {services.map((s, i) => (
+                                    <ServiceCard key={s.id} serviceTag={s.tag_name} serviceId={s.id} icon={icons[i%icons.length]} color={colors[i%colors.length]}
+                                                 setErrMsg={setErrMsg}/>
+                                ))}
+                            </Row>
+                        </>
+                    }
                 </Container>
             </main>
         </div>
