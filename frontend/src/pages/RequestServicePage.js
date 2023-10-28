@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createNewTicket, getAllAvailableServices } from "../api/BackendInterface";
-import {Alert, Card, Col, Container, Form, Row, Spinner} from "react-bootstrap";
+import {Alert, Button, Card, Col, Container, Form, Row, Spinner} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 
@@ -10,6 +10,7 @@ function RequestServicePage() {
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errMsg, setErrMsg] = useState("");
+    const [ticketNumber, setTicketNumber] = useState("");
 
     const fetchServicesList = async () => {
         try {
@@ -24,7 +25,6 @@ function RequestServicePage() {
     };
 
     const navigateToTicketDetailsPage = () => {
-        const ticketNumber = document.querySelector("#ticket-number").value;
         navigate(`/tickets/${ticketNumber}`);
     }
 
@@ -51,15 +51,16 @@ function RequestServicePage() {
                         </Container>
                         :
                         <>
-                            <Form className="d-flex justify-content-center">
+                            <Form className="d-flex justify-content-center" onSubmit={navigateToTicketDetailsPage}>
                                 <Form.Group>
                                     <Form.Label><b>Already have a ticket?</b> Search your ticket by ticket number below to get the details.</Form.Label>
                                     <Row xs={1} md={2} className="d-flex justify-content-center">
                                         <Col md={7}>
-                                            <Form.Control type="text" placeholder="Ticket number" id="ticket-number" />
+                                            <Form.Control required type="number" placeholder="Ticket number" id="ticket-number"
+                                                min={1} value={ticketNumber} onChange={(ev) => setTicketNumber(ev.target.value)}/>
                                         </Col>
                                         <Col md={3}>
-                                            <Form.Control type="button" value="Search" className="btn btn-primary" onClick={navigateToTicketDetailsPage} />
+                                            <Button type="submit">Search</Button>
                                         </Col>
                                     </Row>
                                 </Form.Group>

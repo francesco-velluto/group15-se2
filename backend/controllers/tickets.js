@@ -12,7 +12,8 @@ module.exports = {
      * @params: ticketNumber
      * @body: none
      * @returns: { ticketNumber: string, service: string, status: string, estimatedTime: number }
-     * @error: 404 - if ticketNumber doesn't exist
+     * @error: 400 - if ticketNumber is not valid
+     * @error: 404 - if ticketNumber doesn't exist or the field isn't in the req.params
      * @error: 500 - internal server error if something went wrong
      */
     getTicketDetails: async (req, res) => {
@@ -21,16 +22,20 @@ module.exports = {
 
 
         if (ticketNumber == null)
-            res.status(404).send('Ticket number is required');
-        // TODO: implement get ticket details
+            return res.status(400).send('Ticket number is required');
+        
+        // validate ticket number
+        if (Number.isInteger(ticketNumber) || (ticketNumber = Number(ticketNumber)) <= 0)
+            return res.status(400).send("Ticket number should be an integer greater than zero");
+        
         try {
             const exists = await ticketDao.controlTicketNumber(ticketNumber);
             if (!exists.exists)
-                res.status(400).send('Ticket absent');
+                return res.status(400).send('Ticket number doesn\'t exist');
 
             const ticket = await ticketDao.getTicketDetails(ticketNumber);
+            
             //waiting time estimation done by Ferraro Elia
-
             let estimated_waiting_time;
 
             if (ticket.status !== "waiting") {
@@ -67,17 +72,6 @@ module.exports = {
         } catch (err) {
             res.status(500).json({ error: err });
         }
-        // TODO: use the relative Ticket model
-
-        // testing db connection done by Magliari Elio
-        //const tickets = await ticketDao.getAllTickets();
-        //console.log(tickets);
-
-
-
-
-
-
     },
 
     /**
@@ -97,7 +91,6 @@ module.exports = {
 
         if (serviceId < 0 || serviceId > 7)
             return res.status(404).send('Invalid serviceId')
-        // TODO: implement new ticket
         try {
             const last_id = await ticketDao.getLastTicketNumberByService();
             const new_number = last_id + 1;
@@ -108,8 +101,6 @@ module.exports = {
         } catch (err) {
             res.status(500).json({ error: err });
         }
-        // TODO: use the relative Ticket model
-
     }
 
 }
