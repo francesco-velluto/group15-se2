@@ -13,7 +13,7 @@ RETROSPECTIVE - Team 15
   we committed to do 2 stories, which are 'Get Ticket' (Story #1) and 'Get estimated time' (Story #3), and we managed to complete both of them.
 
 - **Total points committed vs. done:**
-  we committed to do 4 points (3 of Get Ticket story + 1 of Get estimated time) points and we did all of 4 points.
+  we committed to do 4 points (3 of Get Ticket story + 1 of Get estimated time) and we did all of 4 points.
 
 - **Nr of hours planned vs. spent (as a team):** 
   we planned to spend 48 hours (8 hours for each one of the 6 team members) plus additional 4 hours for planning and we spent 51h 20m in total.
@@ -27,10 +27,10 @@ RETROSPECTIVE - Team 15
 | _#3_   |    4    |   1    | 7h 30m     |   6h 30m     |
 
 - **Hours per task average, standard deviation (estimate and actual):**
-  - Average Estimate: 2h 36m
-  - Average Actual: 2h 25m
-  - Standard Deviation Estimate: 1h 30m
-  - Standard Deviation Actual: 1h 30m
+  - Average Estimate: 2h 15m
+  - Average Actual: 2h 14m
+  - Standard Deviation Estimate: 1h 3m
+  - Standard Deviation Actual: 57m
 
 - **Total task estimation error ratio: (sum of total hours estimation / sum of total hours spent) - 1:**
   - 0.06
@@ -58,7 +58,6 @@ RETROSPECTIVE - Team 15
   - The main issue in estimation was caused by the fact we didn't estimate the time for code review.
   - We estimated more time than what we planned for the organization and planning of the sprint.
   - Some tasks were overestimated because we thought they would be more difficult than they actually were.
-  - We wrongly estimated the time to manage the new opened issue.
 
 - **What lessons did you learn (both positive and negative) in this sprint?**
   - We learned that we should estimate the time for code review.
